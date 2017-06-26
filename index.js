@@ -2,8 +2,11 @@ var app = require('express')();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 
+app.set( 'views', __dirname + '/views' );
+app.set( 'view engine', 'ejs' );
+
 app.get('/', function(req, res){
-  res.sendFile(__dirname + '/index.html');
+  res.render( 'pages/hello');
 });
 
 io.on('connection', function(socket){
@@ -20,11 +23,11 @@ io.on('connection', function(socket){
 });
 
 io.on('connection', function(socket){
-  socket.on('chat message', function(msg){  
+  socket.on('chat message', function(msg){
     io.emit('chat message', msg);
   });
 });
 
-http.listen(3000, function(){
-  console.log('listening on *:3000');
+http.listen(8080, function(){
+  console.log('listening on *:5000');
 });
